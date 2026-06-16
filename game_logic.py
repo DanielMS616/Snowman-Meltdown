@@ -7,6 +7,7 @@ from ascii_art import STAGES
 # Default list of secret words
 DEFAULT_WORDS = ["python", "git", "github", "snowman", "meltdown"]
 WORDS_FILE = "words.txt"
+DISPLAY_WIDTH = 30
 
 
 def load_words():
@@ -16,7 +17,7 @@ def load_words():
     """
 
     try:
-        with open(WORDS_FILE, "r") as fileobj:
+        with open(WORDS_FILE, "r", encoding="utf-8") as fileobj:
             lines = fileobj.readlines()
 
         words = []
@@ -53,9 +54,9 @@ def display_game_state(mistakes, secret_word, guessed_letters):
     max_mistakes = len(STAGES) - 1
 
     print()
-    print("=" * 30)
+    print("=" * DISPLAY_WIDTH)
     print("SNOWMAN MELTDOWN")
-    print("=" * 30)
+    print("=" * DISPLAY_WIDTH)
 
     print(STAGES[mistakes])
 
@@ -75,7 +76,7 @@ def display_game_state(mistakes, secret_word, guessed_letters):
         print("Guessed letters: none")
 
     print(f"Mistakes: {mistakes}/{max_mistakes}")
-    print("-" * 30)
+    print("-" * DISPLAY_WIDTH)
     print()
 
 
@@ -176,7 +177,8 @@ def main():
         print("Current Score")
         print(f"Wins: {score['wins']} | Losses: {score['losses']}")
         print()
-        print("=" * 30 + "\n")
+        print("=" * DISPLAY_WIDTH)
+        print()
 
         play_again = ask_play_again()
 

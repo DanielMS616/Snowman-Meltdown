@@ -44,6 +44,21 @@ def is_word_guessed(secret_word, guessed_letters):
     return True
 
 
+def get_valid_guess():
+    """
+    Ask the user for a single alphabetic letter.
+    Keeps asking until the input is valid.
+    """
+
+    while True:
+        guess = input("Guess a letter: ").lower().strip()
+
+        if len(guess) == 1 and guess.isalpha():
+            return guess
+
+        print("Please enter a single letter.")
+
+
 def play_game():
     """Starts the Snowman Meltdown game."""
 
@@ -57,7 +72,7 @@ def play_game():
     while mistakes < max_mistakes and not is_word_guessed(secret_word, guessed_letters):
         display_game_state(mistakes, secret_word, guessed_letters)
 
-        guess = input("Guess a letter: ").lower()
+        guess = get_valid_guess()
 
         if guess in guessed_letters:
             print("You already guessed that letter.")

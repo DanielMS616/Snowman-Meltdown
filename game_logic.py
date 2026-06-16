@@ -95,8 +95,9 @@ def ask_play_again():
 
 
 def play_game():
-    """Starts the Snowman Meltdown game."""
-
+    """Starts the Snowman Meltdown game.
+    Returns True if the player won, False otherwise.
+    """
     secret_word = get_random_word()
     guessed_letters = []
     mistakes = 0
@@ -121,17 +122,32 @@ def play_game():
 
     if is_word_guessed(secret_word, guessed_letters):
         print("You saved the snowman!")
-    else:
-        print("Game Over! The word was:", secret_word)
+        return True
+
+    print("Game Over! The word was:", secret_word)
+    return False
 
 
 def main():
-    """Runs the game and asks the user if they want to play again."""
-
+    """Runs the game, tracks the session score, and asks to play again."""
     play_again = True
 
+    score = {"wins": 0, "losses": 0}
+
     while play_again:
-        play_game()
+        game_won = play_game()
+
+        if game_won:
+            score["wins"] += 1
+        else:
+            score["losses"] += 1
+
+        print()
+        print("Current Score")
+        print(f"Wins: {score['wins']} | Losses: {score['losses']}")
+        print()
+        print("=" * 30 + "\n")
+
         play_again = ask_play_again()
 
     print("Thanks for playing Snowman Meltdown!")

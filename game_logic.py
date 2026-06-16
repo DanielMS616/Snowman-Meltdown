@@ -4,14 +4,44 @@ import random
 
 from ascii_art import STAGES
 
-# List of secret words
-WORDS = ["python", "git", "github", "snowman", "meltdown"]
+# Default list of secret words
+DEFAULT_WORDS = ["python", "git", "github", "snowman", "meltdown"]
+WORDS_FILE = "words.txt"
+
+
+def load_words():
+    """
+    Loads words from an external file.
+    If the file does not exist or is empty, the default word list is used.
+    """
+
+    try:
+        with open(WORDS_FILE, "r") as fileobj:
+            lines = fileobj.readlines()
+
+        words = []
+
+        for line in lines:
+            word = line.strip().lower()
+
+            if word != "" and word.isalpha():
+                words.append(word)
+
+        if len(words) > 0:
+            return words
+
+        return DEFAULT_WORDS
+
+    except FileNotFoundError:
+        return DEFAULT_WORDS
 
 
 def get_random_word():
-    """Selects a random word from the list."""
+    """Selects a random word from the word list."""
 
-    return WORDS[random.randint(0, len(WORDS) - 1)]
+    words = load_words()
+
+    return words[random.randint(0, len(words) - 1)]
 
 
 def display_game_state(mistakes, secret_word, guessed_letters):

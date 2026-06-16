@@ -20,6 +20,13 @@ def display_game_state(mistakes, secret_word, guessed_letters):
     Unknown letters are shown as underscores.
     """
 
+    max_mistakes = len(STAGES) - 1
+
+    print()
+    print("=" * 30)
+    print("SNOWMAN MELTDOWN")
+    print("=" * 30)
+
     print(STAGES[mistakes])
 
     display_word = ""
@@ -30,7 +37,15 @@ def display_game_state(mistakes, secret_word, guessed_letters):
         else:
             display_word += "_ "
 
-    print("Word: ", display_word)
+    print("Word:", display_word)
+
+    if len(guessed_letters) > 0:
+        print("Guessed letters:", ", ".join(guessed_letters))
+    else:
+        print("Guessed letters: none")
+
+    print(f"Mistakes: {mistakes}/{max_mistakes}")
+    print("-" * 30)
     print()
 
 
@@ -44,19 +59,21 @@ def is_word_guessed(secret_word, guessed_letters):
     return True
 
 
-def get_valid_guess():
+def get_valid_guess(guessed_letters):
     """
     Ask the user for a single alphabetic letter.
-    Keeps asking until the input is valid.
+    Keeps asking until the input is valid and not guessed before.
     """
 
     while True:
         guess = input("Guess a letter: ").lower().strip()
 
-        if len(guess) == 1 and guess.isalpha():
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single letter.")
+        elif guess in guessed_letters:
+            print("You already guessed that letter.")
+        else:
             return guess
-
-        print("Please enter a single letter.")
 
 
 def play_game():
@@ -72,11 +89,9 @@ def play_game():
     while mistakes < max_mistakes and not is_word_guessed(secret_word, guessed_letters):
         display_game_state(mistakes, secret_word, guessed_letters)
 
-        guess = get_valid_guess()
+        guess = get_valid_guess(guessed_letters)
 
-        if guess in guessed_letters:
-            print("You already guessed that letter.")
-        elif guess in secret_word:
+        if guess in secret_word:
             guessed_letters.append(guess)
             print("Good guess!")
         else:

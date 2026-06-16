@@ -76,6 +76,24 @@ def get_valid_guess(guessed_letters):
             return guess
 
 
+def ask_play_again():
+    """
+    Ask the user if they want to play again.
+    Keeps asking until the user enters y or n.
+    """
+
+    while True:
+        answer = input("Do you want to play again? (y/n): ").lower().strip()
+
+        if answer == "y":
+            return True
+
+        if answer == "n":
+            return False
+
+        print("Please enter y or n.")
+
+
 def play_game():
     """Starts the Snowman Meltdown game."""
 
@@ -105,3 +123,15 @@ def play_game():
         print("You saved the snowman!")
     else:
         print("Game Over! The word was:", secret_word)
+
+
+def main():
+    """Runs the game and asks the user if they want to play again."""
+
+    play_again = True
+
+    while play_again:
+        play_game()
+        play_again = ask_play_again()
+
+    print("Thanks for playing Snowman Meltdown!")

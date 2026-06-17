@@ -129,6 +129,7 @@ def play_game():
     """Starts the Snowman Meltdown game.
     Returns True if the player won, False otherwise.
     """
+
     secret_word = get_random_word()
     guessed_letters = []
     mistakes = 0
@@ -161,6 +162,7 @@ def play_game():
 
 def main():
     """Runs the game, tracks the session score, and asks to play again."""
+
     play_again = True
 
     score = {"wins": 0, "losses": 0}
